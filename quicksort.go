@@ -2,6 +2,7 @@ package quicksort
 
 import (
 	"fmt"
+	"sync"
 )
 
 func Sort(toSort []int) {
@@ -33,22 +34,22 @@ func Sort(toSort []int) {
 	fmt.Println("Pivot:", pivot)
 	fmt.Println("Final:", toSort)
 
-	//wait := sync.WaitGroup{}
+	wait := sync.WaitGroup{}
 	if compare > 1 {
-		/*go*/ func() {
+		go func() {
 			Sort(toSort[:compare])
-			//wait.Done()
+			wait.Done()
 		}()
-		//wait.Add(1)
+		wait.Add(1)
 	}
 	if pivot < len(toSort) - 2 {
-		/*go*/ func() {
+		go func() {
 			Sort(toSort[pivot + 1:])
-			//wait.Done()
+			wait.Done()
 		}()
-		//wait.Add(1)
+		wait.Add(1)
 	}
-	//wait.Wait()
+	wait.Wait()
 }
 
 // At the start we select our pivot (in our case this will be the last element in the array).
