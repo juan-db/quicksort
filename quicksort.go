@@ -4,7 +4,19 @@ import (
 	"sync"
 )
 
-func Sort(toSort []int) {
+func Sort(toSort []int) []int {
+	if toSort == nil {
+		return nil
+	} else if len(toSort) < 2 {
+		return toSort
+	}
+
+	output := append([]int{}, toSort...)
+	sortInplace(output)
+	return output
+}
+
+func sortInplace(toSort []int) {
 	if length := len(toSort); length < 2 {
 		return
 	} /*else if length < 3 {
@@ -20,7 +32,7 @@ func Sort(toSort []int) {
 			//if compare == pivot - 1 {
 			//	toSort[compare], toSort[pivot] = toSort[pivot], toSort[compare]
 			//} else {
-				toSort[compare], toSort[pivot - 1], toSort[pivot] = toSort[pivot - 1], toSort[pivot], toSort[compare]
+			toSort[compare], toSort[pivot - 1], toSort[pivot] = toSort[pivot - 1], toSort[pivot], toSort[compare]
 			//}
 			pivot -= 1
 		} else {
@@ -31,14 +43,14 @@ func Sort(toSort []int) {
 	wait := sync.WaitGroup{}
 	if compare > 1 {
 		go func() {
-			Sort(toSort[:compare])
+			sortInplace(toSort[:compare])
 			wait.Done()
 		}()
 		wait.Add(1)
 	}
 	if pivot < len(toSort) - 2 {
 		go func() {
-			Sort(toSort[pivot + 1:])
+			sortInplace(toSort[pivot + 1:])
 			wait.Done()
 		}()
 		wait.Add(1)
