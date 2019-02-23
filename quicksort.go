@@ -1,8 +1,6 @@
 package quicksort
 
-import (
-	"sync"
-)
+import "sync"
 
 func Sort(toSort []int) []int {
 	if toSort == nil {
@@ -12,28 +10,24 @@ func Sort(toSort []int) []int {
 	}
 
 	output := append([]int{}, toSort...)
-	sortInplace(output)
+	sortInPlace(output)
 	return output
 }
 
-func sortInplace(toSort []int) {
+func sortInPlace(toSort []int) {
 	if length := len(toSort); length < 2 {
 		return
-	} /*else if length < 3 {
+	} else if length < 3 {
 		if toSort[0] > toSort[1] {
 			toSort[1], toSort[0] = toSort[0], toSort[1]
 			return
 		}
-	}*/
+	}
 
 	compare, pivot := 0, len(toSort) - 1
 	for compare < pivot {
 		if toSort[compare] > toSort[pivot] {
-			//if compare == pivot - 1 {
-			//	toSort[compare], toSort[pivot] = toSort[pivot], toSort[compare]
-			//} else {
 			toSort[compare], toSort[pivot - 1], toSort[pivot] = toSort[pivot - 1], toSort[pivot], toSort[compare]
-			//}
 			pivot -= 1
 		} else {
 			compare += 1
@@ -43,14 +37,14 @@ func sortInplace(toSort []int) {
 	wait := sync.WaitGroup{}
 	if compare > 1 {
 		go func() {
-			sortInplace(toSort[:compare])
+			sortInPlace(toSort[:compare])
 			wait.Done()
 		}()
 		wait.Add(1)
 	}
 	if pivot < len(toSort) - 2 {
 		go func() {
-			sortInplace(toSort[pivot + 1:])
+			sortInPlace(toSort[pivot + 1:])
 			wait.Done()
 		}()
 		wait.Add(1)
@@ -58,6 +52,7 @@ func sortInplace(toSort []int) {
 	wait.Wait()
 }
 
+// Bad explanation and writing follows (it was written mainly for myself to help me understand what I'm thinking):
 // At the start we select our pivot (in our case this will be the last element in the array).
 // In the array [ 3, 7, 1, 0 ] our pivot will be set to index 3 where the value 0 resides.
 // At this point we know that none of the value ahead of the pivot have been sorted. Our first step is to compare the
