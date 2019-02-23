@@ -1,12 +1,10 @@
 package quicksort
 
 import (
-	"fmt"
 	"sync"
 )
 
 func Sort(toSort []int) {
-	fmt.Println("Sorting: ", toSort)
 	if length := len(toSort); length < 2 {
 		return
 	} /*else if length < 3 {
@@ -29,10 +27,6 @@ func Sort(toSort []int) {
 			compare += 1
 		}
 	}
-
-	fmt.Println("Compare:", compare)
-	fmt.Println("Pivot:", pivot)
-	fmt.Println("Final:", toSort)
 
 	wait := sync.WaitGroup{}
 	if compare > 1 {
