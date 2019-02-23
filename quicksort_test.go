@@ -82,4 +82,7 @@ func BenchmarkSort(b *testing.B) {
 		actual[i] = random.Int()
 	}
 	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		Sort(actual)
+	}
 }
