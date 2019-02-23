@@ -36,18 +36,18 @@ func sortInPlace(toSort []int) {
 
 	wait := sync.WaitGroup{}
 	if compare > 1 {
+		wait.Add(1)
 		go func() {
 			sortInPlace(toSort[:compare])
 			wait.Done()
 		}()
-		wait.Add(1)
 	}
 	if pivot < len(toSort) - 2 {
+		wait.Add(1)
 		go func() {
 			sortInPlace(toSort[pivot + 1:])
 			wait.Done()
 		}()
-		wait.Add(1)
 	}
 	wait.Wait()
 }
