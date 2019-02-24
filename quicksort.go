@@ -5,8 +5,6 @@ import "sync"
 func Sort(toSort []int) []int {
 	if toSort == nil {
 		return nil
-	} else if len(toSort) < 2 {
-		return toSort
 	}
 
 	output := append([]int{}, toSort...)
